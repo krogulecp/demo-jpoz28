@@ -44,4 +44,15 @@ class CarControllerTest {
         assertThat(carResult.getBody().getMake()).isEqualTo("Fiat");
         assertThat(carResult.getBody().getModel()).isEqualTo("126P");
     }
+
+    @Test
+    void should_save_car_in_repository(){
+        //given
+
+
+        //when
+
+
+        //then
+    }
 }

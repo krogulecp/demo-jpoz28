@@ -18,4 +18,9 @@ public class CarService {
         return carRepository.findById(id)
                 .map(Car::fromCarEntity);
     }
+
+    public Long addCar(Car car) {
+        final CarEntity carEntity = carRepository.save(new CarEntity(null, car.getMake(), car.getModel()));
+        return carEntity.getId();
+    }
 }
