@@ -7,6 +7,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -47,6 +49,18 @@ class CarControllerTest {
 
     @Test
     void should_save_car_in_repository(){
+        //given
+        testRestTemplate.postForEntity("/cars", new Car("Fiat", "125P"), Void.class);
+
+        //when
+        final List<CarEntity> cars = carRepository.findAll();
+
+        //then
+        assertThat(cars.size()).isEqualTo(1);
+    }
+
+    @Test
+    void should_save_car_and_get_it_with_api(){
         //given
 
 
