@@ -33,12 +33,15 @@ class CarControllerTest {
     @Test
     void should_return_car_when_it_exists_in_repository(){
         //given
-
+        carRepository.save(new CarEntity(1L, "Fiat", "126P"));
 
         //when
-
+        final ResponseEntity<Car> carResult = testRestTemplate.getForEntity("/cars/1", Car.class);
 
         //then
-
+        assertThat(carResult.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(carResult.getBody()).isNotNull();
+        assertThat(carResult.getBody().getMake()).isEqualTo("Fiat");
+        assertThat(carResult.getBody().getModel()).isEqualTo("126P");
     }
 }
