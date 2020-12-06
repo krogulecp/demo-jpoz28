@@ -7,6 +7,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.net.URI;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,11 +63,14 @@ class CarControllerTest {
     @Test
     void should_save_car_and_get_it_with_api(){
         //given
-
+        final ResponseEntity<Void> saveCarResponse = testRestTemplate.postForEntity("/cars", new Car("Fiat", "500"), Void.class);
+        final URI carLocation = saveCarResponse.getHeaders().getLocation();
 
         //when
-
+        final ResponseEntity<Car> getCarResponse = testRestTemplate.getForEntity(carLocation, Car.class);
 
         //then
+        assertThat(getCarResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getCarResponse.getBody()).isNotNull();
     }
 }
