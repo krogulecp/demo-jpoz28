@@ -12,6 +12,7 @@ interface CarRepositoryCustom {
 interface CarRepository extends JpaRepository<CarEntity,Long>, CarRepositoryCustom {
 
     List<CarEntity> findByModel(String model);
+    List<CarEntity> findByMakeAndModel(String make, String model);
 
 }
 
