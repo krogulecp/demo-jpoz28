@@ -2,6 +2,8 @@ package pl.sda.spring.demo.dbdemo;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CarService {
 
@@ -11,9 +13,9 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public Car getCar(Long id) {
+    public Optional<Car> getCar(Long id) {
+        //logika biznesowa
         return carRepository.findById(id)
-                .map(Car::fromCarEntity)
-                .orElse(null);
+                .map(Car::fromCarEntity);
     }
 }
