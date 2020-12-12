@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice(assignableTypes = ValidationController.class)
 public class ValidationControllerAdvice {
@@ -21,5 +24,11 @@ public class ValidationControllerAdvice {
         response.put("errorCount", String.valueOf(exception.getErrorCount()));
 
         return response;
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public String handleConstraintViolationException(ConstraintViolationException exception){
+        return exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
     }
 }
